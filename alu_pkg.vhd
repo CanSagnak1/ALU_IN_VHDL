@@ -1,29 +1,11 @@
---------------------------------------------------------------------------------
--- File        : alu_pkg.vhd
--- Project     : Professional 32-bit ALU
--- Description : Package containing type definitions, constants, and utility
---               functions for the ALU design.
--- Author      : Professional VHDL Design
--- Version     : 1.0
--- Created     : 2024
---------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 package alu_pkg is
-
-    ----------------------------------------------------------------------------
-    -- Constants
-    ----------------------------------------------------------------------------
     constant DATA_WIDTH     : integer := 32;
     constant OPCODE_WIDTH   : integer := 4;
     constant SHIFT_WIDTH    : integer := 5;
-    
-    ----------------------------------------------------------------------------
-    -- ALU Operation Codes
-    ----------------------------------------------------------------------------
     constant OP_ADD  : std_logic_vector(OPCODE_WIDTH-1 downto 0) := "0000";
     constant OP_SUB  : std_logic_vector(OPCODE_WIDTH-1 downto 0) := "0001";
     constant OP_AND  : std_logic_vector(OPCODE_WIDTH-1 downto 0) := "0010";
@@ -41,9 +23,6 @@ package alu_pkg is
     constant OP_DEC  : std_logic_vector(OPCODE_WIDTH-1 downto 0) := "1110";
     constant OP_CMP  : std_logic_vector(OPCODE_WIDTH-1 downto 0) := "1111";
     
-    ----------------------------------------------------------------------------
-    -- Status Flags Record Type
-    ----------------------------------------------------------------------------
     type alu_flags_t is record
         zero     : std_logic;
         carry    : std_logic;
@@ -59,10 +38,6 @@ package alu_pkg is
         negative => '0',
         parity   => '0'
     );
-    
-    ----------------------------------------------------------------------------
-    -- Function Declarations
-    ----------------------------------------------------------------------------
     
     function calculate_parity(data : std_logic_vector) return std_logic;
     
@@ -95,9 +70,6 @@ end package alu_pkg;
 
 package body alu_pkg is
 
-    ----------------------------------------------------------------------------
-    -- Calculate Even Parity
-    ----------------------------------------------------------------------------
     function calculate_parity(data : std_logic_vector) return std_logic is
         variable parity : std_logic := '0';
     begin
@@ -107,9 +79,6 @@ package body alu_pkg is
         return parity;
     end function calculate_parity;
     
-    ----------------------------------------------------------------------------
-    -- Barrel Shift Left (Logical)
-    ----------------------------------------------------------------------------
     function barrel_shift_left(
         data   : std_logic_vector;
         amount : integer
@@ -127,9 +96,6 @@ package body alu_pkg is
         return result;
     end function barrel_shift_left;
     
-    ----------------------------------------------------------------------------
-    -- Barrel Shift Right (Logical)
-    ----------------------------------------------------------------------------
     function barrel_shift_right(
         data   : std_logic_vector;
         amount : integer
@@ -147,9 +113,6 @@ package body alu_pkg is
         return result;
     end function barrel_shift_right;
     
-    ----------------------------------------------------------------------------
-    -- Arithmetic Shift Right (Preserves Sign Bit)
-    ----------------------------------------------------------------------------
     function arithmetic_shift_right(
         data   : std_logic_vector;
         amount : integer
@@ -168,10 +131,7 @@ package body alu_pkg is
         end if;
         return result;
     end function arithmetic_shift_right;
-    
-    ----------------------------------------------------------------------------
-    -- Rotate Left
-    ----------------------------------------------------------------------------
+
     function rotate_left(
         data   : std_logic_vector;
         amount : integer
@@ -188,10 +148,7 @@ package body alu_pkg is
         end if;
         return result;
     end function rotate_left;
-    
-    ----------------------------------------------------------------------------
-    -- Rotate Right
-    ----------------------------------------------------------------------------
+
     function rotate_right(
         data   : std_logic_vector;
         amount : integer
