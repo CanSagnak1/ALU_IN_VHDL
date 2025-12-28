@@ -1,13 +1,3 @@
---------------------------------------------------------------------------------
--- File        : alu_tb.vhd
--- Project     : Professional 32-bit ALU
--- Description : Comprehensive testbench for ALU verification. Tests all 
---               operations, boundary conditions, and flag generation.
--- Author      : Professional VHDL Design
--- Version     : 1.0
--- Created     : 2024
---------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -130,10 +120,7 @@ begin
         wait for CLK_PERIOD * 5;
         rst_n <= '1';
         wait for CLK_PERIOD * 2;
-        
-        ------------------------------------------------------------------------
-        -- Test ADD Operation
-        ------------------------------------------------------------------------
+
         report "Testing ADD operation..." severity note;
         
         operand_a <= x"00000005";
@@ -170,9 +157,6 @@ begin
         assert flag_overflow = '1' report "Overflow flag should be set" severity error;
         assert flag_negative = '1' report "Negative flag should be set" severity error;
         
-        ------------------------------------------------------------------------
-        -- Test SUB Operation
-        ------------------------------------------------------------------------
         report "Testing SUB operation..." severity note;
         
         operand_a <= x"0000000A";
@@ -195,10 +179,7 @@ begin
         expected_result := x"00000000";
         check_result(test_passed, test_failed, "SUB 3-3=0", expected_result, result);
         assert flag_zero = '1' report "Zero flag should be set" severity error;
-        
-        ------------------------------------------------------------------------
-        -- Test AND Operation
-        ------------------------------------------------------------------------
+
         report "Testing AND operation..." severity note;
         
         operand_a <= x"F0F0F0F0";
@@ -210,10 +191,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"F000F000";
         check_result(test_passed, test_failed, "AND test", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test OR Operation
-        ------------------------------------------------------------------------
+
         report "Testing OR operation..." severity note;
         
         operand_a <= x"F0F0F0F0";
@@ -225,10 +203,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"FFFFFFFF";
         check_result(test_passed, test_failed, "OR test", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test XOR Operation
-        ------------------------------------------------------------------------
+
         report "Testing XOR operation..." severity note;
         
         operand_a <= x"AAAAAAAA";
@@ -250,10 +225,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"00000000";
         check_result(test_passed, test_failed, "XOR self=0", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test NOT Operation
-        ------------------------------------------------------------------------
+
         report "Testing NOT operation..." severity note;
         
         operand_a <= x"00000000";
@@ -273,10 +245,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"00000000";
         check_result(test_passed, test_failed, "NOT all 1s", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test NAND Operation
-        ------------------------------------------------------------------------
+
         report "Testing NAND operation..." severity note;
         
         operand_a <= x"FFFFFFFF";
@@ -288,10 +257,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"00000000";
         check_result(test_passed, test_failed, "NAND test", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test NOR Operation
-        ------------------------------------------------------------------------
+
         report "Testing NOR operation..." severity note;
         
         operand_a <= x"00000000";
@@ -303,10 +269,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"FFFFFFFF";
         check_result(test_passed, test_failed, "NOR test", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test SLL Operation
-        ------------------------------------------------------------------------
+
         report "Testing SLL operation..." severity note;
         
         operand_a <= x"00000001";
@@ -318,10 +281,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"00000010";
         check_result(test_passed, test_failed, "SLL by 4", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test SRL Operation
-        ------------------------------------------------------------------------
+
         report "Testing SRL operation..." severity note;
         
         operand_a <= x"80000000";
@@ -333,10 +293,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"08000000";
         check_result(test_passed, test_failed, "SRL by 4", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test SRA Operation
-        ------------------------------------------------------------------------
+
         report "Testing SRA operation..." severity note;
         
         operand_a <= x"80000000";
@@ -358,10 +315,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"04000000";
         check_result(test_passed, test_failed, "SRA by 4 (positive)", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test ROL Operation
-        ------------------------------------------------------------------------
+
         report "Testing ROL operation..." severity note;
         
         operand_a <= x"80000001";
@@ -373,10 +327,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"00000003";
         check_result(test_passed, test_failed, "ROL by 1", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test ROR Operation
-        ------------------------------------------------------------------------
+
         report "Testing ROR operation..." severity note;
         
         operand_a <= x"00000003";
@@ -388,10 +339,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"80000001";
         check_result(test_passed, test_failed, "ROR by 1", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test INC Operation
-        ------------------------------------------------------------------------
+
         report "Testing INC operation..." severity note;
         
         operand_a <= x"00000005";
@@ -412,10 +360,7 @@ begin
         expected_result := x"00000000";
         check_result(test_passed, test_failed, "INC overflow", expected_result, result);
         assert flag_carry = '1' report "Carry flag should be set on INC overflow" severity error;
-        
-        ------------------------------------------------------------------------
-        -- Test DEC Operation
-        ------------------------------------------------------------------------
+
         report "Testing DEC operation..." severity note;
         
         operand_a <= x"00000005";
@@ -435,10 +380,7 @@ begin
         wait for CLK_PERIOD;
         expected_result := x"FFFFFFFF";
         check_result(test_passed, test_failed, "DEC underflow", expected_result, result);
-        
-        ------------------------------------------------------------------------
-        -- Test CMP Operation
-        ------------------------------------------------------------------------
+
         report "Testing CMP operation..." severity note;
         
         operand_a <= x"00000005";
@@ -458,10 +400,7 @@ begin
         wait for CLK_PERIOD;
         enable <= '0';
         wait for CLK_PERIOD;
-        
-        ------------------------------------------------------------------------
-        -- Test Summary
-        ------------------------------------------------------------------------
+
         wait for CLK_PERIOD * 5;
         
         report "========================================" severity note;
