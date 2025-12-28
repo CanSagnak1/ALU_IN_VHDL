@@ -5,7 +5,7 @@
 **Proje Adı:** 32-Bit Aritmetik Mantık Birimi (ALU)  
 **Tasarım Dili:** VHDL (VHSIC Hardware Description Language)  
 **Versiyon:** 1.0  
-**Tarih:** Aralık 2024
+**Tarih:** Aralık 2025
 
 ---
 
