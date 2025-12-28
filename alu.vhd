@@ -1,13 +1,3 @@
---------------------------------------------------------------------------------
--- File        : alu.vhd
--- Project     : Professional 32-bit ALU
--- Description : Main ALU entity implementing 16 arithmetic and logical 
---               operations with comprehensive status flag generation.
--- Author      : Professional VHDL Design
--- Version     : 1.0
--- Created     : 2024
---------------------------------------------------------------------------------
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
@@ -65,9 +55,6 @@ begin
     add_result <= ('0' & a_unsigned) + ('0' & b_unsigned);
     sub_result <= ('0' & a_unsigned) - ('0' & b_unsigned);
 
-    ----------------------------------------------------------------------------
-    -- Main ALU Process
-    ----------------------------------------------------------------------------
     alu_process : process(clk, rst_n)
         variable v_result     : std_logic_vector(G_DATA_WIDTH-1 downto 0);
         variable v_result_hi  : std_logic_vector(G_DATA_WIDTH-1 downto 0);
@@ -108,9 +95,7 @@ begin
                                    sub_result(G_DATA_WIDTH-1));
                 
                 case opcode is
-                    ------------------------------------------------------------
-                    -- Arithmetic Operations
-                    ------------------------------------------------------------
+
                     when OP_ADD =>
                         v_result := std_logic_vector(add_result(G_DATA_WIDTH-1 downto 0));
                         v_flags.carry := add_result(G_DATA_WIDTH);
@@ -135,9 +120,6 @@ begin
                         v_flags.overflow := operand_a(G_DATA_WIDTH-1) and 
                                             (not v_result(G_DATA_WIDTH-1));
                     
-                    ------------------------------------------------------------
-                    -- Logical Operations
-                    ------------------------------------------------------------
                     when OP_AND =>
                         v_result := operand_a and operand_b;
                         
@@ -156,9 +138,6 @@ begin
                     when OP_NOR =>
                         v_result := operand_a nor operand_b;
                     
-                    ------------------------------------------------------------
-                    -- Shift Operations
-                    ------------------------------------------------------------
                     when OP_SLL =>
                         v_result := barrel_shift_left(operand_a, v_shift);
                         if v_shift > 0 then
@@ -177,9 +156,6 @@ begin
                             v_flags.carry := operand_a(v_shift - 1);
                         end if;
                     
-                    ------------------------------------------------------------
-                    -- Rotate Operations
-                    ------------------------------------------------------------
                     when OP_ROL =>
                         v_result := rotate_left(operand_a, v_shift);
                         if v_shift > 0 then
@@ -192,9 +168,6 @@ begin
                             v_flags.carry := operand_a(v_shift - 1);
                         end if;
                     
-                    ------------------------------------------------------------
-                    -- Compare Operation
-                    ------------------------------------------------------------
                     when OP_CMP =>
                         v_result := std_logic_vector(sub_result(G_DATA_WIDTH-1 downto 0));
                         v_flags.carry := sub_result(G_DATA_WIDTH);
